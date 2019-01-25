@@ -60,3 +60,6 @@ anybox.recipe.odoo
 etc
 upgrade.py
 *.run
+
+# Custom folders
+local/
