@@ -63,3 +63,6 @@ upgrade.py
 
 # Custom folders
 local/
+
+# Local files
+local.cfg
