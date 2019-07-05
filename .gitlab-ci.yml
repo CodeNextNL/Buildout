@@ -54,17 +54,12 @@ before_script:
 #  - chmod 600 ~/.ssh/id_rsa
 #  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - cat ~/.ssh/id_rsa >> ~/.ssh/authorized_keys
-#  - mkdir -p $APT_DIR
+  - mkdir -p $APT_DIR
   - apt-get update
   - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
   # kan weg?
   # - $PIP_CMD install --upgrade setuptools pip
   - $PIP_CMD install virtualenv
-
-# test:
-#   stage: test
-#   script:
-#     - echo "TEST STAGE"
 
 deploy:
   stage: deploy
