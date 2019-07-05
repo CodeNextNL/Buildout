@@ -5,18 +5,18 @@ stages:
   #- test
   - deploy
 
-## Cache our buildout project per Gitlab project
-#cache:
-#  key: $CI_PROJECT_ID
-#  paths:
-#  - .cache/pip
-#  - apt_cache/
-#  - buildout/develop_eggs/
-#  - buildout/downloads/
-#  - buildout/eggs/
-#  - buildout/sandbox/
-#
-## Configure our postgres server to match our gitlab.cfg file (could be dynamically)
+# Cache our buildout project per Gitlab project
+cache:
+  key: $CI_PROJECT_ID
+  paths:
+  - .cache/pip
+  - apt_cache/
+  - buildout/develop_eggs/
+  - buildout/downloads/
+  - buildout/eggs/
+  - buildout/sandbox/
+
+# Configure our postgres server to match our gitlab.cfg file (could be dynamically)
 variables:
   GIT_STRATEGY: none # Do not checkout out the branch triggering this build
   APT_DIR: $CI_PROJECT_DIR/apt_cache
@@ -33,20 +33,20 @@ variables:
   # ODOO_MODULE_LIST: account
   # OCA_MODULE_LIST: ""
   # COUNTRY_ID: "base.nl"
-#
-## Install SSH deploy keys and setup host key checks
-### gevent error during buildout (https://stackoverflow.com/questions/26053982/setup-script-exited-with-error-command-x86-64-linux-gnu-gcc-failed-with-exit)
-## libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential
-### # kan weg?
-##  software-properties-common | libjpeg-dev libcups2-dev python-gevent
-###
-#before_script:
-#  - git config --global user.email "gitlab-runner@example.com"
-#  - git config --global user.name "GitLab Runner"
+
+# Install SSH deploy keys and setup host key checks
+## gevent error during buildout (https://stackoverflow.com/questions/26053982/setup-script-exited-with-error-command-x86-64-linux-gnu-gcc-failed-with-exit)
+# libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential
+## # kan weg?
+#  software-properties-common | libjpeg-dev libcups2-dev python-gevent
+##
+before_script:
+  - git config --global user.email "gitlab-runner@example.com"
+  - git config --global user.name "GitLab Runner"
 #  - 'which ssh-agent || ( apt-get update -y && apt-get -o dir::cache::archives="$APT_DIR" install openssh-client -y )'
 #  - eval $(ssh-agent -s)
 #  - ssh-add <(echo "$GITLAB_PRIVATE_KEY")
-#  - mkdir -p $CI_PROJECT_DIR
+  - mkdir -p $CI_PROJECT_DIR
 #  - mkdir -p ~/.ssh
 #  - chmod 700 ~/.ssh
 #  - echo -n $GITLAB_DEPLOY_KEY > ~/.ssh/id_rsa_base64
@@ -55,64 +55,58 @@ variables:
 #  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - cat ~/.ssh/id_rsa >> ~/.ssh/authorized_keys
 #  - mkdir -p $APT_DIR
-#  - apt-get update
-#  - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
-#  # kan weg?
-#  # - $PIP_CMD install --upgrade setuptools pip
-#  - $PIP_CMD install virtualenv
-#
-## test:
-##   stage: test
-##   script:
-##     - echo "TEST STAGE"
-#
-#deploy:
-#  stage: deploy
-#  script:
-#    # Set the buildout branch, preferably to the current commit branch
-#    # - if [[ `git ls-remote --heads git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $CI_COMMIT_REF_NAME` ]]; then
-#    - if [[ `git ls-remote --heads git@gitlab.localhost:wytzejan/codenext-test.git $CI_COMMIT_REF_NAME` ]]; then
-#    -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
-#    - fi
-#
-#    # Create or update buildout to latest develop branch
-#    - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
-#    -   cd $BUILDOUT_DIR
-#    -   git fetch --all
-#    -   echo  $BUILDOUT_BRANCH
-#    -   git checkout $BUILDOUT_BRANCH
-#    -   git pull
-#    - else
-#    # -   git clone -b $BUILDOUT_BRANCH git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $BUILDOUT_DIR
-#    -   git clone -b $BUILDOUT_BRANCH git@gitlab.localhost:wytzejan/codenext-test.git $BUILDOUT_DIR
-#    - fi
-#
-#    # Link buildout.cfg if needed
-#    - cd $BUILDOUT_DIR
-#    - if [ ! -f buildout.cfg ] ; then
-#    -   ln -s gitlab.cfg buildout.cfg
-#    - fi
-##
-#    # Run bootstrap if required
-#    - if [ ! -d $BUILDOUT_DIR/sandbox ]; then
-#    -   virtualenv $BUILDOUT_DIR/sandbox -p $PYTHON_CMD --no-setuptools
-#    -   . $BUILDOUT_DIR/sandbox/bin/activate
-#    -   $PIP_CMD install mr.developer
-#    -   cd $BUILDOUT_DIR
-#    -   ls
-#    -   $PYTHON_CMD $BUILDOUT_DIR/bootstrap.py
-#    -   deactivate
-#    - fi
-#
-#    # Run buildout and checkout branch that triggered CI
-#    - ls
-#    - bin/buildout
-#    # - cd $BUILDOUT_DIR/parts/custom
-#    # - git fetch --unshallow origin
-#    # - git checkout $CI_COMMIT_REF_NAME
+  - apt-get update
+  - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
+  # kan weg?
+  # - $PIP_CMD install --upgrade setuptools pip
+  - $PIP_CMD install virtualenv
+
+# test:
+#   stage: test
+#   script:
+#     - echo "TEST STAGE"
 
 deploy:
   stage: deploy
   script:
-    - echo $CI_PROJECT_DIR
-    - echo $BUILDOUT_DIR
+    # Set the buildout branch, preferably to the current commit branch
+    # - if [[ `git ls-remote --heads git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $CI_COMMIT_REF_NAME` ]]; then
+    - if [[ `git ls-remote --heads git@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
+    -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
+    - fi
+
+    # Create or update buildout to latest develop branch
+    - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
+    -   cd $BUILDOUT_DIR
+    -   git fetch --all
+    -   echo  $BUILDOUT_BRANCH
+    -   git checkout $BUILDOUT_BRANCH
+    -   git pull
+    - else
+    # -   git clone -b $BUILDOUT_BRANCH git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $BUILDOUT_DIR
+    -   git clone -b $BUILDOUT_BRANCH git@gitlab.com/codenextnl/buildout.git $BUILDOUT_DIR
+    - fi
+
+    # Link buildout.cfg if needed
+    - cd $BUILDOUT_DIR
+    - if [ ! -f buildout.cfg ] ; then
+    -   ln -s gitlab.cfg buildout.cfg
+    - fi
+#
+    # Run bootstrap if required
+    - if [ ! -d $BUILDOUT_DIR/sandbox ]; then
+    -   virtualenv $BUILDOUT_DIR/sandbox -p $PYTHON_CMD --no-setuptools
+    -   . $BUILDOUT_DIR/sandbox/bin/activate
+    -   $PIP_CMD install mr.developer
+    -   cd $BUILDOUT_DIR
+    -   ls
+    -   $PYTHON_CMD $BUILDOUT_DIR/bootstrap.py
+    -   deactivate
+    - fi
+
+    # Run buildout and checkout branch that triggered CI
+    - ls
+    - bin/buildout
+    # - cd $BUILDOUT_DIR/parts/custom
+    # - git fetch --unshallow origin
+    # - git checkout $CI_COMMIT_REF_NAME
