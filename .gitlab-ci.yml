@@ -42,20 +42,20 @@ variables:
 ## https://docs.gitlab.com/ee/ci/ssh_keys/README.html
 ##
 before_script:
+  # git config
   - git config --global user.email "gitlab-runner@example.com"
   - git config --global user.name "GitLab Runner"
   - 'which ssh-agent || ( apt-get update -y && apt-get -o dir::cache::archives="$APT_DIR" install openssh-client -y )'
   - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-#  - ssh-add <(echo "$GITLAB_PRIVATE_KEY")
   - mkdir -p $CI_PROJECT_DIR
+  # add gitlab ssh key
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
-#  - echo -n $GITLAB_DEPLOY_KEY > ~/.ssh/id_rsa_base64
-#  - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
-#  - chmod 600 ~/.ssh/id_rsa
-#  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-#  - cat ~/.ssh/id_rsa >> ~/.ssh/authorized_keys
+  - echo -n $GITLAB_KEY > ~/.ssh/id_rsa_base64
+  - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  #  - cat ~/.ssh/id_rsa >> ~/.ssh/authorized_keys
   - mkdir -p $APT_DIR
   - apt-get update
   - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
