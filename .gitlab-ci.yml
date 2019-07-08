@@ -39,16 +39,18 @@ variables:
 # libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential
 ## # kan weg?
 #  software-properties-common | libjpeg-dev libcups2-dev python-gevent
+## https://docs.gitlab.com/ee/ci/ssh_keys/README.html
 ##
 before_script:
   - git config --global user.email "gitlab-runner@example.com"
   - git config --global user.name "GitLab Runner"
-#  - 'which ssh-agent || ( apt-get update -y && apt-get -o dir::cache::archives="$APT_DIR" install openssh-client -y )'
-#  - eval $(ssh-agent -s)
+  - 'which ssh-agent || ( apt-get update -y && apt-get -o dir::cache::archives="$APT_DIR" install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
 #  - ssh-add <(echo "$GITLAB_PRIVATE_KEY")
   - mkdir -p $CI_PROJECT_DIR
-#  - mkdir -p ~/.ssh
-#  - chmod 700 ~/.ssh
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
 #  - echo -n $GITLAB_DEPLOY_KEY > ~/.ssh/id_rsa_base64
 #  - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
 #  - chmod 600 ~/.ssh/id_rsa
@@ -106,3 +108,10 @@ deploy:
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
+
+    # copy build to server
+    - cd $BUILDOUT_DIR
+    - export SSHPASS=$USER_PASS
+    - sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_SERVER 'rm -rf /home/$DEPLOY_USER/odoo/*'
+    - sshpass -e scp -o stricthostkeychecking=no -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+    # end copy build to server
