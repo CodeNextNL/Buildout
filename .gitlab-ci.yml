@@ -66,7 +66,7 @@ deploy:
   script:
     # Set the buildout branch, preferably to the current commit branch
     # - if [[ `git ls-remote --heads git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $CI_COMMIT_REF_NAME` ]]; then
-    - if [[ `git ls-remote --heads http://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
+    - if [[ `git ls-remote --heads https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
     -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
     - fi
 
@@ -79,7 +79,7 @@ deploy:
     -   git pull
     - else
     # -   git clone -b $BUILDOUT_BRANCH git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $BUILDOUT_DIR
-    -   git clone -b $BUILDOUT_BRANCH http://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $BUILDOUT_DIR
+    -   git clone -b $BUILDOUT_BRANCH https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $BUILDOUT_DIR
     - fi
 
     # Link buildout.cfg if needed
@@ -92,6 +92,7 @@ deploy:
     - if [ ! -d $BUILDOUT_DIR/sandbox ]; then
     -   virtualenv $BUILDOUT_DIR/sandbox -p $PYTHON_CMD --no-setuptools
     -   . $BUILDOUT_DIR/sandbox/bin/activate
+    -   $PIP_CMD install setuptools
     -   $PIP_CMD install mr.developer
     -   cd $BUILDOUT_DIR
     -   ls
