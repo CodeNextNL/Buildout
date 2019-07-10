@@ -109,5 +109,6 @@ deploy:
     # copy build to server
     - cd $BUILDOUT_DIR
     - ssh $DEPLOY_USER@$DEPLOY_SERVER "sudo rm -rf /home/$DEPLOY_USER/odoo/*"
-    - scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+    #- scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+    - rsync -azP $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     # end copy build to server
