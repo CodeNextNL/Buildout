@@ -62,13 +62,6 @@ before_script:
 deploy:
   stage: deploy
   script:
-    # test
-    - ls
-    - cd $CI_PROJECT_DIR
-    - ls
-    - cd BUILDOUT_DIR
-    - ls
-
     # Set the buildout branch, preferably to the current commit branch
     # - if [[ `git ls-remote --heads git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $CI_COMMIT_REF_NAME` ]]; then
     - if [[ `git ls-remote --heads https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
