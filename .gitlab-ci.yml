@@ -23,7 +23,7 @@ variables:
   POSTGRES_DB: odoo
   POSTGRES_USER: odoo
   POSTGRES_PASSWORD: odoo
-  BUILDOUT_DIR: $CI_PROJECT_DIR/buildout
+  BUILDOUT_DIR: $CI_PROJECT_DIR
   BUILDOUT_BRANCH: develop
   BOOTSTRAP_MODULE: xx_bootstrap
   PIP_CMD: pip3
@@ -67,16 +67,6 @@ deploy:
     - if [[ `git ls-remote --heads https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
     -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
     - fi
-
-    # test
-    - ls
-    - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
-    -   echo "test"
-    - fi
-    - echo $BUILDOUT_DIR
-    - ls $BUILDOUT_DIR
-    - cd $BUILDOUT_DIR
-    - ls
 
     # Create or update buildout to latest develop branch
     - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
