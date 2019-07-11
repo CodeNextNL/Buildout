@@ -10,6 +10,7 @@ cache:
   paths:
   - .cache/pip
   - apt_cache/
+  - buildout-cache/
   - public/develop_eggs/
   - public/downloads/
   - public/eggs/
@@ -19,6 +20,7 @@ cache:
 variables:
   GIT_STRATEGY: none # Do not checkout out the branch triggering this build
   APT_DIR: $CI_PROJECT_DIR/apt_cache
+  BUILDOUT_CACHE: $CI_PROJECT_DIR/buildout-cache
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   POSTGRES_DB: odoo
   POSTGRES_USER: odoo
@@ -42,6 +44,7 @@ variables:
 before_script:
   - mkdir -p $CI_PROJECT_DIR
   - mkdir -p $APT_DIR
+  - mkdir -p $BUILDOUT_CACHE
   # git config
   - git config --global user.email "gitlab-runner@example.com"
   - git config --global user.name "GitLab Runner"
@@ -100,7 +103,7 @@ deploy:
 
     # Run buildout and checkout branch that triggered CI
     - ls
-    - bin/buildout
+    - bin/buildout -N
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
