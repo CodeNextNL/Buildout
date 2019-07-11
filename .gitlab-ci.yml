@@ -77,7 +77,6 @@ deploy:
     -   git pull
     - else
     # -   git clone -b $BUILDOUT_BRANCH git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $BUILDOUT_DIR
-    -   rm -r $BUILDOUT_DIR
     -   git clone -b $BUILDOUT_BRANCH https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $BUILDOUT_DIR
     - fi
 
