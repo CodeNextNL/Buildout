@@ -9,10 +9,11 @@ cache:
   paths:
   - .cache/pip
   - apt_cache/
-  - public/develop_eggs/
-  - public/downloads/
-  - public/eggs/
-  - public/sandbox/
+  - buildout/
+#  - public/develop_eggs/
+#  - public/downloads/
+#  - public/eggs/
+#  - public/sandbox/
 
 # Configure our postgres server to match our gitlab.cfg file (could be dynamically)
 variables:
@@ -22,7 +23,8 @@ variables:
   POSTGRES_DB: odoo
   POSTGRES_USER: odoo
   POSTGRES_PASSWORD: odoo
-  BUILDOUT_DIR: $CI_PROJECT_DIR/public
+#  BUILDOUT_DIR: $CI_PROJECT_DIR/public
+  BUILDOUT_DIR: /home/$DEPLOY_USER/odoo/buildout
   BUILDOUT_BRANCH: develop
   BOOTSTRAP_MODULE: xx_bootstrap
   PIP_CMD: pip3
