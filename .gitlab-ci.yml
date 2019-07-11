@@ -69,6 +69,7 @@ deploy:
     - fi
 
     #test
+    - cd
     - ls
     - ls $BUILDOUT_DIR
     - ls -a $BUILDOUT_DIR
