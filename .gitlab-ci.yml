@@ -23,7 +23,7 @@ variables:
   POSTGRES_DB: odoo
   POSTGRES_USER: odoo
   POSTGRES_PASSWORD: odoo
-  BUILDOUT_DIR: $CI_PROJECT_DIR
+  BUILDOUT_DIR: $CI_PROJECT_DIR/buildout
   BUILDOUT_BRANCH: develop
   BOOTSTRAP_MODULE: xx_bootstrap
   PIP_CMD: pip3
@@ -69,7 +69,7 @@ deploy:
     - fi
 
     # Create or update buildout to latest develop branch
-    - cd $BUILDOUT_DIR
+    - rm -r $BUILDOUT_DIR
     - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
     -   cd $BUILDOUT_DIR
     -   git fetch --all
