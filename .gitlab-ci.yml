@@ -33,7 +33,6 @@ variables:
   # OCA_MODULE_LIST: ""
   # COUNTRY_ID: "base.nl"
 
-# Install SSH deploy keys and setup host key checks
 ## gevent error during buildout (https://stackoverflow.com/questions/26053982/setup-script-exited-with-error-command-x86-64-linux-gnu-gcc-failed-with-exit)
 # libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential
 ## # kan weg?
@@ -68,6 +67,12 @@ deploy:
     - if [[ `git ls-remote --heads https://${DEPLOY_TOKEN_USERNAME}:${DEPLOY_TOKEN_PASSWORD}@gitlab.com/codenextnl/buildout.git $CI_COMMIT_REF_NAME` ]]; then
     -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
     - fi
+
+    # test
+    - echo $BUILDOUT_DIR
+    - ls $BUILDOUT_DIR
+    - cd $BUILDOUT_DIR
+    - ls
 
     # Create or update buildout to latest develop branch
     - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
