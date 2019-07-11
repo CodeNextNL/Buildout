@@ -69,6 +69,10 @@ deploy:
     - fi
 
     # test
+    - ls
+    - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
+    -   echo "test"
+    - fi
     - echo $BUILDOUT_DIR
     - ls $BUILDOUT_DIR
     - cd $BUILDOUT_DIR
