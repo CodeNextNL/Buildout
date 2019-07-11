@@ -6,14 +6,14 @@ stages:
 
 # Cache our buildout project per Gitlab project
 cache:
-  key: $CI_COMMIT_REF_SLUG
+  key: $CI_PROJECT_ID
   paths:
   - .cache/pip
   - apt_cache/
-  - buildout/develop_eggs/
-  - buildout/downloads/
-  - buildout/eggs/
-  - buildout/sandbox/
+  - public/develop_eggs/
+  - public/downloads/
+  - public/eggs/
+  - public/sandbox/
 
 # Configure our postgres server to match our gitlab.cfg file (could be dynamically)
 variables:
