@@ -68,6 +68,10 @@ deploy:
     -    export BUILDOUT_BRANCH=$CI_COMMIT_REF_NAME
     - fi
 
+    #test
+    - ls $BUILDOUT_DIR
+    - ls -a $BUILDOUT_DIR
+
     # Create or update buildout to latest develop branch
     - if [ -d $BUILDOUT_DIR ] && [ -d $BUILDOUT_DIR/.git ]; then
     -   cd $BUILDOUT_DIR
