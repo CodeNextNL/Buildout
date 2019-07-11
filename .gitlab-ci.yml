@@ -71,6 +71,7 @@ deploy:
     # Create or update buildout to latest develop branch
     - if [ -d $BUILDOUT_DIR ]; then
     -   cd $BUILDOUT_DIR
+    -   git init
     -   git fetch --all
     -   echo  $BUILDOUT_BRANCH
     -   git checkout $BUILDOUT_BRANCH
