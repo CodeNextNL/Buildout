@@ -107,6 +107,7 @@ build:
 
 deploy:
   stage: deploy
+  script:
     # copy build to server
     - cd $BUILDOUT_DIR
     - ssh $DEPLOY_USER@$DEPLOY_SERVER "cd /home/$DEPLOY_USER/odoo && sudo ls | grep -v local.cfg | xargs rm -rf"
