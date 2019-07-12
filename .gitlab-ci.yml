@@ -24,7 +24,7 @@ variables:
   POSTGRES_USER: odoo
   POSTGRES_PASSWORD: odoo
 #  BUILDOUT_DIR: $CI_PROJECT_DIR/public
-  BUILDOUT_DIR: /home/$DEPLOY_USER/odoo/buildout
+  BUILDOUT_DIR: /home/$DEPLOY_USER/odoo
   BUILDOUT_BRANCH: develop
   BOOTSTRAP_MODULE: xx_bootstrap
   PIP_CMD: pip3
