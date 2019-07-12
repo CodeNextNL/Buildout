@@ -105,14 +105,14 @@ build:
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
 
-deploy:
-  stage: deploy
-  script:
+#deploy:
+#  stage: deploy
+#  script:
     # copy build to server
     - cd $BUILDOUT_DIR
     - ssh $DEPLOY_USER@$DEPLOY_SERVER "cd /home/$DEPLOY_USER/odoo && sudo ls | grep -v local.cfg | xargs rm -rf"
     #- scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
 #    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     # end copy build to server
-  only:
-    - develop
+#  only:
+#    - develop
