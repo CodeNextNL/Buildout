@@ -112,7 +112,7 @@ build:
     - cd $BUILDOUT_DIR
     - ssh $DEPLOY_USER@$DEPLOY_SERVER "cd /home/$DEPLOY_USER/odoo && sudo ls | grep -v local.cfg | xargs rm -rf"
     #- scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
-#    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     # end copy build to server
 #  only:
 #    - develop
