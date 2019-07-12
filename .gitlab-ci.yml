@@ -115,4 +115,4 @@ deploy:
 #    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     # end copy build to server
   only:
-    - development
+    - develop
