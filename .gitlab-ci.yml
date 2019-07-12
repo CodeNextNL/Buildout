@@ -1,6 +1,7 @@
 image: python:3.6
 
 stages:
+  - build
   - deploy
 
 # Cache our buildout project per Gitlab project
@@ -56,8 +57,8 @@ before_script:
   - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less rsync sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
   - $PIP_CMD install virtualenv
 
-deploy:
-  stage: deploy
+build:
+  stage: build
   script:
     # Set the buildout branch, preferably to the current commit branch
     # - if [[ `git ls-remote --heads git@gitlab.dynapps.be:customers/$GITLAB_CUSTOMER/buildout.git $CI_COMMIT_REF_NAME` ]]; then
@@ -104,9 +105,13 @@ deploy:
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
 
+deploy:
+  stage: deploy
     # copy build to server
     - cd $BUILDOUT_DIR
-    - ssh $DEPLOY_USER@$DEPLOY_SERVER "sudo rm -rf /home/$DEPLOY_USER/odoo/*"
+    - ssh $DEPLOY_USER@$DEPLOY_SERVER "cd /home/$DEPLOY_USER/odoo && sudo ls | grep -v local.cfg | xargs rm -rf"
     #- scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
-    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+#    - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     # end copy build to server
+  only:
+    - development
