@@ -1,0 +1,8 @@
+[buildout]
+extends = buildout.cfg
+
+[odoo]
+options.admin_passwd = @@STAGING_ADMIN_PASS@@
+options.db_name = @@STAGING_DB@@
+options.dbfilter = ^@@STAGING_DB@@$
+options.log_level = info

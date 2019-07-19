@@ -54,6 +54,7 @@ before_script:
   - apt-get update
   - apt-get -o dir::cache::archives="$APT_DIR" install -y libsasl2-dev libldap2-dev node-less rsync sshpass libevent-dev python3-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev build-essential software-properties-common libjpeg-dev libcups2-dev python-gevent
   - $PIP_CMD install virtualenv
+  - sed -e 's/@@STAGING_ADMIN_PASS@@/'$STAGING_ADMIN_PASS'/' -e 's/@@STAGING_DB@@/'$STAGING_DB'/' local.cfg.template > local.cfg
 
 build:
   stage: build
@@ -98,7 +99,7 @@ build:
 
     # Run buildout and checkout branch that triggered CI
     - ls
-    - bin/buildout -N
+    - bin/buildout -N -c local.cfg
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
