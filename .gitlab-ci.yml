@@ -79,6 +79,8 @@ build:
     - fi
 
     # create local.cfg
+    - cd $BUILDOUT_DIR
+    - ls
     - sed -e 's/@@STAGING_ADMIN_PASS@@/'$STAGING_ADMIN_PASS'/' -e 's/@@STAGING_DB@@/'$STAGING_DB'/' local.cfg.template > local.cfg
 
     # Link buildout.cfg if needed
