@@ -103,6 +103,7 @@ build:
 
     # Run buildout and checkout branch that triggered CI
     - ls
+    - export PYTHONPATH=/home/$DEPLOY_USER/odooK
     - bin/buildout -N -c local.cfg
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
