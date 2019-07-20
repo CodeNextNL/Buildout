@@ -81,7 +81,7 @@ build:
     # create local.cfg
     - cd $BUILDOUT_DIR
     - ls
-    - sed -e 's/@@STAGING_ADMIN_PASS@@/'$STAGING_ADMIN_PASS'/' -e 's/@@STAGING_DB@@/'$STAGING_DB'/' local.cfg.template > local.cfg
+    - sed -e 's/@@STAGING_ADMIN_PASS@@/'$STAGING_ADMIN_PASS'/' -e 's/@@STAGING_DB@@/'$STAGING_DB'/' -e 's/@@DEPLOY_USER@@/'$DEPLOY_USER'/' local.cfg.template > local.cfg
 
     # Link buildout.cfg if needed
     - cd $BUILDOUT_DIR
@@ -103,7 +103,7 @@ build:
 
     # Run buildout and checkout branch that triggered CI
     - ls
-    - export PYTHONPATH=/home/$DEPLOY_USER/odooK
+    - export PYTHONPATH=/home/$DEPLOY_USER/odoo
     - bin/buildout -N -c local.cfg
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
