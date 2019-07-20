@@ -104,7 +104,7 @@ build:
     # Run buildout and checkout branch that triggered CI
     - ls
     - export PYTHONPATH=/home/$DEPLOY_USER/odoo
-    - bin/buildout -N -c local.cfg
+    - bin/buildout -N
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
