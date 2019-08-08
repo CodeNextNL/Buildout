@@ -95,7 +95,6 @@ build:
     -   . $BUILDOUT_DIR/sandbox/bin/activate
     -   $PIP_CMD install setuptools
     -   $PIP_CMD install mr.developer
-    -   $PIP_CMD psycopg2 --upgrade
     -   cd $BUILDOUT_DIR
     -   ls
     -   $PYTHON_CMD $BUILDOUT_DIR/bootstrap.py
@@ -105,7 +104,7 @@ build:
     # Run buildout and checkout branch that triggered CI
     - ls
 #    - bin/buildout -N -c local.cfg
-    - bin/buildout -N
+#    - bin/buildout -N
     # - cd $BUILDOUT_DIR/parts/custom
     # - git fetch --unshallow origin
     # - git checkout $CI_COMMIT_REF_NAME
@@ -118,6 +117,7 @@ build:
     - ssh $DEPLOY_USER@$DEPLOY_SERVER "cd /home/$DEPLOY_USER/odoo && sudo ls | grep -v local.cfg | xargs rm -rf"
     #- scp -r $BUILDOUT_DIR/* $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
     - rsync -az $BUILDOUT_DIR/ $DEPLOY_USER@$DEPLOY_SERVER:/home/$DEPLOY_USER/odoo
+    - ssh $DEPLOY_USER@$DEPLOY_SERVER  "cd /home/$DEPLOY_USER/odoo && bin/buildout -N -c local.cfg"
     # end copy build to server
 #  only:
 #    - develop
