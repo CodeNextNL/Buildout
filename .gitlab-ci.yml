@@ -95,6 +95,7 @@ build:
     -   . $BUILDOUT_DIR/sandbox/bin/activate
     -   $PIP_CMD install setuptools
     -   $PIP_CMD install mr.developer
+    -   $PIP_CMD psycopg2 --upgrade
     -   cd $BUILDOUT_DIR
     -   ls
     -   $PYTHON_CMD $BUILDOUT_DIR/bootstrap.py
