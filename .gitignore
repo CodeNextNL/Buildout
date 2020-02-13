@@ -66,3 +66,6 @@ local/
 
 # Local files
 local.cfg
+
+# Log files
+log/
