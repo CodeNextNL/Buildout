@@ -37,7 +37,9 @@ coverage.xml
 *.mo
 
 # Pycharm
-.idea
+.idea/*.iml
+.idea/*.xml
+.idea/inspectionProfiles
 
 # Mr Developer
 .mr.developer.cfg
