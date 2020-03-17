@@ -1,27 +1,24 @@
-# CodeNext Buildout
+# CodeNext Odoo
+
 ## Installation
-* Create a virtualenv without setuptools:
-`virtualenv -p python3 env`
-* Run the bootstrap.py script: `./env/bin/python3 bootstrap.py`
-* Create local.cfg with the following content:
-```
-[buildout]
-extends = buildout.cfg
 
-[odoo]
-options.admin_passwd = your_admin_passwd
-options.data_dir = your_data_dir
-options.db_name = your_db_name
-options.db_user = your_db_user
-options.dbfilter = ^your_db_name$
-options.logfile = your_log_file/path
-```
-* Activate virtualenv with `source env/bin/activate`
-* Install requirements `env/bin/pip3 install -r requirements.txt`
-* Run `bin/buildout -c local.cfg`
+- Clone this repository.
+- Change variables in install.sh
+- Make install.sh executable: `sudo chmod +x install.sh`
+- Run install.sh: `./install.sh`
+- Change Odoo configartion in \*-venv/odoo.conf:
 
-In case an ImportError with psycopg2 occurs: `env/bin/pip3 install psycopg2`. (StackOverflow: https://stackoverflow.com/questions/48780354/python-django-error-version-glibc-private-not-defined)
+```
+[options]
+admin_passwd = your_admin_password
+dbfilter = ^your_dbfilter$
+db_name = your_db_name
+db_user = your_db_user (e.g. odoo)
+http_port = your_http_port (e.g. 8069)
+longpolling_port = your_longpolling_port (e.g. 8072)
+addons_path = /usr/lib/python3/dist-packages/odoo/addons
+```
 
 ## Run
-* Activate virtualenv with `source env/bin/activate`
-* Run `bin/start_odoo` to start Odoo 
+
+- Run in odoo home folder `./odoo11-venv/bin/python3 odoo11/odoo-bin -c odoo11-venv/odoo11.conf` to start Odoo
