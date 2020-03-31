@@ -84,7 +84,9 @@ echo $addons_path
 echo -e "\r"
 
 # create Odoo configuration file
-rm $odoohome/$venv/odoo11.conf || true
+if [ -f $odoohome/$venv/odoo11.conf ] ; then
+    rm $odoohome/$venv/odoo11.conf
+fi
 touch $odoohome/$venv/odoo11.conf
 echo "[options]
 admin_passwd = your_admin_password  
