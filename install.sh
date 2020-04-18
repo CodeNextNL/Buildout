@@ -3,12 +3,12 @@
 # VARIABLES
 odoouser=odoo
 odoohome=/home/$odoouser
-odooinstancehome=$odoohome/odoo11
-venv=odoo11-venv
+odooinstancehome=$odoohome/odoo12
+venv=odoo12-venv
 odoo=https://www.github.com/odoo
 oca=https://github.com/OCA
 codenext=https://github.com/CodeNextNL
-branch=11.0
+branch=12.0
 
 # ODOO
 ## check if Odoo is already installed
@@ -27,13 +27,13 @@ fi
 
 # CUSTOM ADDONS
 
-if [ ! -d $odoohome/odoo11-custom-addons ]; then
-  sudo -u $odoouser mkdir -p $odoohome/odoo11-custom-addons
-  sudo -u $odoouser chown $odoouser: $odoohome/odoo11-custom-addons
+if [ ! -d $odoohome/odoo12-custom-addons ]; then
+  sudo -u $odoouser mkdir -p $odoohome/odoo12-custom-addons
+  sudo -u $odoouser chown $odoouser: $odoohome/odoo12-custom-addons
 fi
 
 # create directories
-cd $odoohome/odoo11-custom-addons
+cd $odoohome/odoo12-custom-addons
 mkdir -p oca
 mkdir -p codenext
 mkdir -p misc
@@ -53,11 +53,12 @@ repos["$oca/account-financial-reporting"]=oca/account-financial-reporting
 repos["$oca/l10n-netherlands"]=oca/l10n-netherlands
 repos["$oca/server-ux"]=oca/server-ux
 repos["$oca/account-financial-tools"]=oca/account-financial-tools
+repos["$oca/reporting-engine"]=oca/reporting-engine
 repos["$codenext/codenext-custom"]=codenext/codenext-custom
 repos["https://github.com/Yenthe666/auto_backup"]=misc/auto_backup
 
 for repo in ${!repos[@]}; do
-  cd $odoohome/odoo11-custom-addons
+  cd $odoohome/odoo12-custom-addons
   if [ ! -d "${repos[${repo}]}" ]
   then
       git clone ${repo}.git --branch $branch ${repos[${repo}]}
@@ -70,22 +71,24 @@ done
 # install requirements.txt in custom addons
 cd $odoohome
 source $venv/bin/activate
-for f in $odoohome/odoo11-custom-addons/*/*/requirements.txt ; do
+for f in $odoohome/odoo12-custom-addons/*/*/requirements.txt ; do
   pip3 install -r $f
 done
 deactivate
 
 # generate addons_path
 addons_path="$odooinstancehome/addons"
-for d in $odoohome/odoo11-custom-addons/*/* ; do
+for d in $odoohome/odoo12-custom-addons/*/* ; do
     addons_path+=,"$d"
 done
 echo $addons_path
 echo -e "\r"
 
 # create Odoo configuration file
-rm $odoohome/$venv/odoo11.conf || true
-touch $odoohome/$venv/odoo11.conf
+if [ -f $odoohome/$venv/odoo12.conf ] ; then
+    rm $odoohome/$venv/odoo12.conf
+fi
+touch $odoohome/$venv/odoo12.conf
 echo "[options]
 admin_passwd = your_admin_password  
 dbfilter = ^your_dbfilter11$
@@ -93,4 +96,4 @@ db_name = your_dbname
 db_user = your_dbuser
 http_port = 8069
 longpolling_port = 8072
-addons_path = $addons_path" >> $odoohome/$venv/odoo11.conf
+addons_path = $addons_path" >> $odoohome/$venv/odoo12.conf
