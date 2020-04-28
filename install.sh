@@ -8,6 +8,7 @@ venv=odoo12-venv
 odoo=https://www.github.com/odoo
 oca=https://github.com/OCA
 codenext=https://github.com/CodeNextNL
+openworx=https://github.com/Openworx
 branch=12.0
 
 # ODOO
@@ -55,6 +56,7 @@ repos["$oca/server-ux"]=oca/server-ux
 repos["$oca/account-financial-tools"]=oca/account-financial-tools
 repos["$oca/reporting-engine"]=oca/reporting-engine
 repos["$codenext/codenext-custom"]=codenext/codenext-custom
+repos["$openworx/backend_theme"]=misc/backend_theme
 repos["https://github.com/Yenthe666/auto_backup"]=misc/auto_backup
 
 for repo in ${!repos[@]}; do
