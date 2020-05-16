@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "name": "Python: Odoo",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "pythonPath": "${workspaceFolder}/odoo12-venv/bin/python3",
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/odoo12/odoo-bin",
+      "args": ["--config", "${workspaceFolder}/odoo12-venv/odoo12.conf"],
+      "cwd": "${workspaceRoot}",
+      "env": {},
+      "envFile": "${workspaceRoot}/.env"
+    }
+  ]
+}
